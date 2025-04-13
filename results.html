@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Spiritual Alignment | Fate Finder</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f0f0f, #1c1c1c);
+      color: #fff;
+    }
+
+    .results-hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      color: #fff;
+      overflow: hidden;
+      background: black;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    .results-container {
+      max-width: 1000px;
+      margin: 4rem auto;
+      padding: 2rem;
+      background-color: #121212;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .results-container h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #ffcb6b;
+    }
+
+    .results-container p {
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .alignment-graph {
+      margin: 2rem 0;
+    }
+
+    .retake-btn {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background-color: #ffcb6b;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s ease;
+    }
+
+    .retake-btn:hover {
+      background-color: #e6b85a;
+    }
+  </style>
+</head>
+<body>
+  <section class="results-hero">
+    <div class="stars" id="stars"></div>
+    <h1>☮️ Here are your results</h1>
+    <p>AI has analyzed your answers. Here's your spiritual alignment:</p>
+  </section>
+
+  <div class="results-container">
+    <h2 id="resultTitle">🌌 Your Path is Becoming Clear...</h2>
+    <p id="resultText"></p>
+    <canvas id="alignmentChart" class="alignment-graph" width="400" height="250"></canvas>
+    <a href="quiz.html" class="retake-btn">🔄 Take the Quiz Again</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function getRandomValues(count) {
+      return Array.from({ length: count }, () => Math.floor(Math.random() * 101));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const result = localStorage.getItem("fateFinderResult");
+      const analysisLevel = localStorage.getItem("analysisLevel") || "short";
+
+      const resultText = document.getElementById("resultText");
+      if (result) {
+        resultText.innerHTML = `<p>${result}</p>`;
+      }
+
+      const ctx = document.getElementById("alignmentChart").getContext("2d");
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: [
+            "Buddhism", "Christianity", "Islam", "Hinduism", "Taoism",
+            "Judaism", "Paganism", "Spiritualism", "Atheism", "New Age"
+          ],
+          datasets: [{
+            label: "Spiritual Match Level",
+            data: getRandomValues(10),
+            backgroundColor: "rgba(255, 203, 107, 0.2)",
+            borderColor: "#ffcb6b",
+            pointBackgroundColor: "#ffcb6b",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          scales: {
+            r: {
+              angleLines: { color: '#444' },
+              grid: { color: '#333' },
+              pointLabels: { color: '#ccc' },
+              ticks: { color: '#ccc' }
+            }
+          },
+          plugins: {
+            legend: { labels: { color: '#fff' } }
+          }
+        }
+      });
+
+      const explanation = document.createElement("div");
+      explanation.style.marginTop = "2rem";
+      explanation.style.fontSize = "1rem";
+      explanation.style.color = "#bbb";
+
+      if (analysisLevel === "short") {
+        explanation.innerHTML = `<p><strong>Summary:</strong> You may resonate most with <em>Buddhism</em>, <em>New Age</em>, or <em>Taoism</em> — paths known for peace, mindfulness, and harmony with nature.</p>`;
+      } else if (analysisLevel === "medium") {
+        explanation.innerHTML = `<p><strong>Medium Insight:</strong> You may align with:
+          <ul>
+            <li><strong>Hinduism</strong>: For its belief in karma, dharma, and spiritual liberation.</li>
+            <li><strong>Spiritualism</strong>: If you feel guided by energy, ancestors, or intuitive connections.</li>
+            <li><strong>Christianity</strong>: If love, grace, and faith resonate with your heart.</li>
+          </ul>
+        </p>`;
+      } else if (analysisLevel === "deep") {
+        explanation.innerHTML = `<p><strong>In-Depth Analysis:</strong> Your spiritual path may include:
+          <ul>
+            <li><strong>Sufi Islam</strong>: Mystical love and surrender.</li>
+            <li><strong>Esoteric Christianity</strong>: Symbolism, compassion, and sacred union.</li>
+            <li><strong>Yogic Hinduism</strong>: Deep meditative practices and spiritual evolution.</li>
+            <li><strong>Paganism</strong>: Rituals aligned with the moon, nature, and earth-based spirituality.</li>
+            <li><strong>New Age</strong>: An intuitive blend of astrology, energy work, and universal love.</li>
+          </ul>
+        </p>`;
+      } else if (analysisLevel === "multiple") {
+        explanation.innerHTML = `<p><strong>Multiple Pathways:</strong> Your beliefs reflect an open heart and a curious soul. You may connect with:
+          <ul>
+            <li><strong>Buddhism</strong>: For inner calm and non-attachment.</li>
+            <li><strong>Paganism</strong>: For nature-based ritual and seasonal alignment.</li>
+            <li><strong>Spiritualism</strong>: For mediumship, energy, and ancestral guidance.</li>
+            <li><strong>Atheism</strong>: If your spirituality is rooted in logic, ethics, and humanism.</li>
+            <li><strong>New Age</strong>: For freedom, chakra work, manifestation, and crystal healing.</li>
+          </ul>
+        </p>`;
+      }
+
+      resultText.appendChild(explanation);
+    });
+
+    // Twinkling stars background
+    const starsContainer = document.getElementById("stars");
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.width = `${Math.random() * 2 + 1}px`;
+      star.style.height = star.style.width;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 5}s`;
+      starsContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>

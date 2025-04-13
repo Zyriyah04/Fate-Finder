@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Fate Finder</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0e0e0e;
+      color: #fff;
+      font-family: 'Helvetica Neue', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: floatUp 12s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+
+    .about-container {
+      max-width: 800px;
+      margin: 6rem auto;
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ffcb6b;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ccc;
+    }
+
+    nav.navbar {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav.navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    nav.navbar ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav.navbar ul.nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav.navbar ul.nav-links li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg" id="animatedBg"></div>
+
+  <nav class="navbar">
+    <div class="logo">Fate Finder</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="results.html">Results</a></li>
+      
+    </ul>
+  </nav>
+
+  <div class="about-container">
+    <h1>About Fate Finder</h1>
+    <p>
+      Fate Finder was born from a desire to explore spirituality beyond boundaries. Whether you seek peace, purpose, tradition, or transcendence — we guide you through thoughtful questions to uncover your deepest beliefs and match them with belief systems from around the world.
+    </p>
+    <p>
+      This experience is powered by AI, introspection, and universal love — because your path is unique and beautiful. Through mindfulness, ritual, logic, or the stars, your soul already knows its truth. Fate Finder simply helps you hear it.
+    </p>
+  </div>
+
+  <script>
+    const bg = document.getElementById("animatedBg");
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.animationDuration = (6 + Math.random() * 6) + "s";
+      star.style.animationDelay = Math.random() * 5 + "s";
+      bg.appendChild(star);
+    }
+  </script>
+</body>
+</html>
