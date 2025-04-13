@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fate Finder</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .hero {
+      position: relative;
+      text-align: center;
+      background: url('images/gif.gif') center center/cover no-repeat;
+      height: 90vh;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+    .hero-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      z-index: 1;
+    }
+    .start-btn {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      background: white;
+      color: black;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      display: none;
+    }
+    .cookie-banner button {
+      background: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery img {
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .history-section {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 2rem;
+      text-align: center;
+    }
+    .history-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .history-section p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+    .testimonials {
+      background: #f2f2f2;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .testimonial {
+      max-width: 600px;
+      margin: 2rem auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .testimonial.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .testimonial p {
+      font-style: italic;
+      color: #333;
+    }
+    .testimonial h4 {
+      margin-top: 1rem;
+      font-weight: normal;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Fate Finder</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="results.html">Results</a></li>
+      
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Fate Finder</h1>
+      <p>Discover which belief system aligns with your soul</p>
+      <a href="quiz.html" class="start-btn">Begin Your Journey</a>
+    </div>
+  </div>
+
+  <section class="gallery">
+    <img src="images/Fate 2.jpeg" alt="Spiritual 2">
+    <img src="images/Fate 3.jpeg" alt="Spiritual 3">
+    <img src="images/Fate 4.png" alt="Spiritual 4">
+    <img src="images/Fate 5.png" alt="Spiritual 5">
+    <img src="images/Fate 6.png" alt="Spiritual 6">
+  </section>
+
+  <section class="history-section">
+    <h2>The Evolution of Religion</h2>
+    <p>
+      Religion has shaped humanity since the dawn of civilization. Ancient belief systems like animism, shamanism, and polytheism were among the first spiritual frameworks, offering explanations for natural events and guiding early communities.
+      As societies evolved, so did organized religion. Major world religions such as Hinduism, Judaism, Buddhism, Christianity, and Islam developed rich traditions and texts that continue to influence billions today.
+      From sacred temples to modern digital spirituality, religion remains a powerful force for meaning, connection, and identity in every era.
+    </p>
+  </section>
+
+  <section class="testimonials">
+    <div class="testimonial" id="t1">
+      <p>“Fate Finder completely shifted how I see spirituality. It felt personal and enlightening.”</p>
+      <h4>– Alex T.</h4>
+    </div>
+    <div class="testimonial" id="t2">
+      <p>“I never thought a website could reflect my beliefs so accurately. Beautiful experience.”</p>
+      <h4>– Reena M.</h4>
+    </div>
+    <div class="testimonial" id="t3">
+      <p>“It helped me find clarity and peace. Thank you Fate Finder.”</p>
+      <h4>– Jordan K.</h4>
+    </div>
+  </section>
+
+  <div class="cookie-banner" id="cookieBanner">
+    <p>This website uses cookies to enhance your experience. By continuing to browse, you agree to our use of cookies.
+      <button onclick="acceptCookies()">Accept</button>
+    </p>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookieBanner').style.display = 'block';
+      }
+    });
+
+    function acceptCookies() {
+      document.getElementById('cookieBanner').style.display = 'none';
+      localStorage.setItem('cookiesAccepted', 'true');
+    }
+
+    function handleScrollFadeIn() {
+      document.querySelectorAll('.testimonial').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight - 100) {
+          el.classList.add('visible');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', handleScrollFadeIn);
+    window.addEventListener('load', handleScrollFadeIn);
+  </script>
+</body>
+</html>
